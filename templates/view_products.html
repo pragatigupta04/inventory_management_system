@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row row-cols-3">
+    <div>
+
+    </div>
+    <div>
+        <h1>{% block title %} Products {% endblock %}</h1>
+        <div>
+            <table class="table-seconday my-4">
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Edit Product</th>
+                </tr>
+                {% for product in products %}
+                <div class='products'>
+                    <tr>
+                        <td>{{ product['product_id'] }}</td>
+                        <td>{{ product['product_name'] }}</td>
+                        <td><a href="/edit_product?product_id={{product['product_id']}}"
+                                class="btn btn-secondary">Edit</a></td>
+                    </tr>
+                </div>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div>
+
+    </div>
+
+</div>
+
+{% endblock %}

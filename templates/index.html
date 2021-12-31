@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row row-cols-3">
+    <div class="col">
+      <div class="my-5">
+        <br><br><h1><b>Inventory Management System<br></b></h1><br>
+        <h3>For SME<br>Manufacturers made simple</h3>
+      </div>
+    </div>
+    <div class="col">
+      <div class="my-5">
+        <br><br><h3><b>Its really easy to manage your inventory!!!</b></h3><br><br>
+        <h2>Know exactly what your customers are using with product and inventory management.</h2>
+      </div>
+    </div>
+    <div class="col">
+      <div>
+        <h2>Please select an operation</h2>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/add_product'">
+          Add a Product
+        </button>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/add_location'">
+          Add a Location
+        </button>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/add_product_movement'">
+          Add a Product Movement
+        </button>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/view_products'">
+          View Products
+        </button>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/view_locations'">
+          View Locations
+        </button>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-dark" onclick="window.location.href='/view_product_movements'">
+          View Product Movements
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

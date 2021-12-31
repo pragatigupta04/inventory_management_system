@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Edit Location {% endblock %}</h1>
+<form method="post" action="{{ url_for('edit_location')}}" method="post">
+    <label for="content">Location Id</label>
+    <br>
+    <input name="location_id" placeholder="Location Id" value="{{ location_id }}"></input>
+    <br>
+    <label for="content">Location Name</label>
+    <br>
+    <input name="location_name" placeholder="Location Name" value="{{ location_name }}"></input>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

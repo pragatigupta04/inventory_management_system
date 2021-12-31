@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row row-cols-auto">
+    <div></div>
+    <div>
+        <h1>{% block title %} Product Movements {% endblock %}</h1>
+        <table class="table-seconday my-4">
+            <tr>
+                <th>Movement Id</th>
+                <th>Product Id</th>
+                <th>From Location</th>
+                <th>To Location</th>
+                <th>Product Qty</th>
+                <th>Edit Product Movement</th>
+            </tr>
+            {% for product_movement in product_movements %}
+            <div class='product_movement'>
+                <tr>
+                    <td>{{ product_movement['movement_id'] }}</td>
+                    <td>{{ product_movement['product_id'] }}</td>
+                    <td>{{ product_movement['from_location'] }}</td>
+                    <td>{{ product_movement['to_location'] }}</td>
+                    <td>{{ product_movement['product_qty'] }}</td>
+                    <td><a href="/edit_product_movement?movement_id={{product_movement['movement_id']}}"
+                            class="btn btn-secondary">Edit</a></td>
+                </tr>
+            </div>
+            {% endfor %}
+        </table>
+    </div>
+    <div></div>
+</div>
+{% endblock %}

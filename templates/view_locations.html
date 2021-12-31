@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row row-cols-3">
+    <div></div>
+    <div>
+        <h1>{% block title %} Locations {% endblock %}</h1>
+        <table class="table-seconday my-4">
+            <tr>
+                <th>Location Id</th>
+                <th>Location Name</th>
+                <th>Edit Location</th>
+            </tr>
+            {% for location in locations %}
+            <div class='locations'>
+                <tr>
+                    <td>{{ location['location_id'] }}</td>
+                    <td>{{ location['location_name'] }}</td>
+                    <td><a href="/edit_location?location_id={{location['location_id']}}"
+                            class="btn btn-secondary">Edit</a></td>
+                </tr>
+            </div>
+            {% endfor %}
+        </table>
+    </div>
+    <div></div>
+</div>
+{% endblock %}

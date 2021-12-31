@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{{ url_for('add_location')}}" method="post">
+    <div class="row g-3 align-items-center row-cols-auto">
+        <div></div>
+        <div>
+            <div>
+                <div class="col-auto">
+                    <label for="Location Name" class="col-form-label">Location Name</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="location_name" class="form-control bg-input" name="location_name">
+                </div>
+            </div>
+            <div>
+                <div class="col-auto my-4">
+                    <input class="btn btn-secondary" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{{ url_for('add_product_movement')}}" method="post">
+    <div class="row g-3 align-items-center row-cols-auto">
+        <div></div>
+        <div>
+            <div>
+                <h2>Add Product Movement</h2>
+                <div class="col-auto">
+                    <label for="Product Id" class="col-form-label">Product Id</label>
+                </div>
+                <div class="col-auto">
+                    <input type="number" id="product_id" class="form-control bg-input" name="product_id">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="col-auto">
+                        <label for="From Location" class="col-form-label">From Location</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="from_location" class="form-control bg-input" name="from_location">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="To Location" class="col-form-label">To Location</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="to_location" class="form-control bg-input" name="to_location">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="Qty" class="col-form-label">Product Quantity</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" id="product_qty" class="form-control bg-input" name="product_qty">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-auto my-4">
+                            <input class="btn btn-secondary" type="submit" value="Submit">
+                        </div>
+                    </div>
+                </div>
+</form>
+{% endblock %}

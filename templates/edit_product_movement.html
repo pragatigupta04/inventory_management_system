@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Edit Product Movement{% endblock %}</h1>
+<form method="post" action="{{ url_for('edit_product_movement')}}" method="post">
+    <label for="content">Movement Id</label>
+    <br>
+    <input name="movement_id" placeholder="Movement Id" value="{{ movement_id }}"></input>
+    <br>
+    <label for="content">Product Id</label>
+    <br>
+    <input name="product_id" placeholder="Product Id" value="{{ product_id }}"></input>
+    <br>
+    <label for="content">From Location</label>
+    <br>
+    <input name="from_location" placeholder="From Location" value="{{ from_location }}"></input>
+    <br>
+    <label for="content">To Location</label>
+    <br>
+    <input name="to_location" placeholder="To location" value="{{ to_location }}"></input>
+    <br>
+    <label for="content">Product Qty</label>
+    <br>
+    <input name="product_qty" placeholder="Product Qty" value="{{ product_qty }}"></input>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

@@ -1,24 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="{{ url_for('add_product')}}" method="post">
+<form action="{{ url_for('add_product')}}" method="post">
     <div class="row g-3 align-items-center row-cols-auto">
         <div></div>
         <div>
-        <div class="my-4">
-            <h2>Add Product</h2>
-        <div class="col-auto">
-            <label for="product_name" class="col-form-label">Product Name</label>
+            <div class="my-4">
+                <h2>Add Product</h2>
+                <div class="col-auto">
+                    <label for="product_name" class="col-form-label">Product Name</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="product_name" class="form-control bg-input" name="product_name">
+                </div>
+                <div class="col-auto">
+                    <label for="location_name" class="col-form-label">Location</label>
+                </div>
+                <div class="dropdown col-auto">
+                    <span class="input-group-addon">Please select</span>
+                    <select name="select_location" class="selectpicker form-control bg-input">
+                        {% for location in locations %}
+                        <option value="{{location.location_name}}">{{location.location_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row-cols-auto">
+            <input id="product_qty" type="number" min=1 class="bg-input" name="product_qty">
         </div>
-        <div class="col-auto">
-            <input type="text" id="product_name" class="form-control bg-input" name="product_name">
+            <div class="col-auto my-4">
+                <input class="btn btn-secondary" type="submit" value="Submit">
+            </div>
         </div>
-        </div>
-        <div class="col-auto my-4">
-            <input class="btn btn-secondary" type="submit" value="Submit">
-        </div>
-    </div>
         <div></div>
-    </div>  
+    </div>
 </form>
 {% endblock %}

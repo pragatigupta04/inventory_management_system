@@ -14,7 +14,9 @@ db = SQLAlchemy(app)
 
 class Product(db.Model):
     product_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    product_name = db.Column(db.String(150), unique=True, nullable=False)
+    product_name = db.Column(db.String(150), nullable=False)
+    product_location = db.Column(db.String(150), nullable=False)
+    product_qty = db.Column(db.Integer)
 
 class Location(db.Model):
     location_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -23,9 +25,9 @@ class Location(db.Model):
 class ProductMovement(db.Model):
     movement_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
-    from_location = db.Column(db.String(150), db.ForeignKey("location.location_id"))
-    to_location = db.Column(db.String(150), db.ForeignKey("location.location_id"))
-    product_id = db.Column(db.Integer, db.ForeignKey("product.product_id"))
+    from_location = db.Column(db.String(150), db.ForeignKey("location.location_name"))
+    to_location = db.Column(db.String(150), db.ForeignKey("location.location_name"))
+    product_name = db.Column(db.String(150), db.ForeignKey("product.product_name"))
     product_qty = db.Column(db.Integer)
 
 @app.route("/")
@@ -37,13 +39,18 @@ def add_product():
     print(request.method)
     if request.method == "POST":
         product_name = request.form.get('product_name')
-        product = Product(product_name=product_name)
+        location_name = request.form.get('select_location')
+        print(location_name)
+        product_qty = request.form.get('product_qty')
+        print(product_qty)
+        product = Product(product_name=product_name, product_location=location_name, product_qty=product_qty)
         db.session.add(product)
         db.session.commit()
         text = "Product Added Successfully!"
         return render_template("add_product.html", text=text)
     else:
-        return render_template("add_product.html")
+        locations = Location.query.all()
+        return render_template("add_product.html", locations=locations)
 
 @app.route("/add_location", methods=["POST", "GET"])
 def add_location():
@@ -60,16 +67,34 @@ def add_location():
 @app.route("/add_product_movement", methods=["POST", "GET"])
 def add_product_movement():
     if request.method == "POST":
-        product_id = request.form.get('product_id')
+        product_name = request.form.get('product_name')
         from_location = request.form.get('from_location')
         to_location = request.form.get('to_location')
-        product_qty = request.form.get('product_qty')
-        product = ProductMovement(product_id=product_id, from_location=from_location, to_location=to_location, product_qty=product_qty)
-        db.session.add(product)
+        product_qty = int(request.form.get('product_qty'))
+        product = db.session.query(Product).filter(Product.product_name==product_name, Product.product_location==from_location).first()
+        product.product_qty = product.product_qty - product_qty
+        db.session.flush()
+        db.session.commit()
+        product = db.session.query(Product).filter(Product.product_name==product_name, Product.product_location==to_location).first()
+        if product is not None:
+            product.product_qty = product.product_qty + product_qty
+            db.session.flush()
+            db.session.commit()
+        else:
+            product = Product(product_name=product_name, product_location=to_location, product_qty=product_qty)
+            db.session.add(product)
+            db.session.commit()
+        product_movement_present = db.session.query(ProductMovement).filter(ProductMovement.product_name==product_name, ProductMovement.to_location==to_location).first()
+        print(product_movement_present)
+        if product_movement_present is not None:
+            product_qty = product_movement_present.product_qty + product_qty
+        product_movement = ProductMovement(product_name=product_name, from_location=from_location, to_location=to_location, product_qty=product_qty)
+        db.session.add(product_movement)
         db.session.commit()
         return render_template("add_product_movement.html")
     else:
-        return render_template("add_product_movement.html")
+        locations = Location.query.all()
+        return render_template("add_product_movement.html", locations=locations)
 
 @app.route("/view_products", methods=["GET"])
 def view_products():
@@ -91,14 +116,18 @@ def edit_product():
     try:
         if request.method == "GET":
             productid = request.args.get('product_id')
-            product_name = db.session.query(Product.product_name).filter(Product.product_id==productid).first()[0]
-            return render_template('edit_product.html', product_id=productid, product_name=product_name)
+            product = db.session.query(Product).filter(Product.product_id==productid).first()
+            return render_template('edit_product.html', product_id=productid, product_name=product.product_name, product_location=product.product_location, product_qty=product.product_qty)
         else:
             productid = request.form.get('product_id')
             product_name = request.form.get('product_name')
+            product_location = request.form.get('product_location')
+            product_qty = request.form.get('product_qty')
             print(productid, product_name)
             product = db.session.query(Product).filter(Product.product_id==productid).first()
             product.product_name = product_name
+            product.product_location = product_location
+            product.product_qty = product_qty
             db.session.flush()
             db.session.commit()
             return redirect('/')
@@ -132,7 +161,7 @@ def edit_product_movement():
         if request.method == "GET":
             movementid = request.args.get('movement_id')
             movement = db.session.query(ProductMovement).filter(ProductMovement.movement_id==movementid).first()
-            product_id = movement.product_id
+            product_id = movement.product_name
             from_location = movement.from_location
             to_location = movement.to_location
             product_qty = movement.product_qty

@@ -8,10 +8,10 @@
             <div>
                 <h2>Add Product Movement</h2>
                 <div class="col-auto">
-                    <label for="Product Id" class="col-form-label">Product Id</label>
+                    <label for="Product Name" class="col-form-label">Product Name</label>
                 </div>
                 <div class="col-auto">
-                    <input type="number" id="product_id" class="form-control bg-input" name="product_id">
+                    <input type="text" id="product_name" class="form-control bg-input" name="product_name">
                 </div>
             </div>
             <div>
@@ -19,8 +19,13 @@
                     <div class="col-auto">
                         <label for="From Location" class="col-form-label">From Location</label>
                     </div>
-                    <div class="col-auto">
-                        <input type="text" id="from_location" class="form-control bg-input" name="from_location">
+                    <div class="dropdown col-auto">
+                        <span class="input-group-addon">Please select</span>
+                        <select name="from_location" class="selectpicker form-control bg-input">
+                            {% for location in locations %}
+                            <option value="{{location.location_name}}">{{location.location_name}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -28,8 +33,13 @@
                         <div class="col-auto">
                             <label for="To Location" class="col-form-label">To Location</label>
                         </div>
-                        <div class="col-auto">
-                            <input type="text" id="to_location" class="form-control bg-input" name="to_location">
+                        <div class="dropdown col-auto">
+                            <span class="input-group-addon">Please select</span>
+                            <select name="to_location" class="selectpicker form-control bg-input">
+                                {% for location in locations %}
+                                <option value="{{location.location_name}}">{{location.location_name}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div>

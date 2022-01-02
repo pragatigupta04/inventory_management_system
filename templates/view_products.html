@@ -12,6 +12,8 @@
                 <tr>
                     <th>Product Id</th>
                     <th>Product Name</th>
+                    <th>Product Location</th>
+                    <th>Product Quantity</th>
                     <th>Edit Product</th>
                 </tr>
                 {% for product in products %}
@@ -19,6 +21,8 @@
                     <tr>
                         <td>{{ product['product_id'] }}</td>
                         <td>{{ product['product_name'] }}</td>
+                        <td>{{ product['product_location'] }}</td>
+                        <td>{{ product['product_qty'] }}</td>
                         <td><a href="/edit_product?product_id={{product['product_id']}}"
                                 class="btn btn-secondary">Edit</a></td>
                     </tr>

@@ -3,13 +3,21 @@
 {% block content %}
 <h1>{% block title %} Edit Product {% endblock %}</h1>
 <form method="post" action="{{ url_for('edit_product')}}" method="post">
-    <label for="content">Product Id</label>
+    <label for="product_id">Product Id</label>
     <br>
     <input name="product_id" placeholder="Product Id" value="{{ product_id }}" readonly=True></input>
     <br>
-    <label for="content">Product Name</label>
+    <label for="product_name">Product Name</label>
     <br>
     <input name="product_name" placeholder="Product Name" value="{{ product_name }}"></input>
+    <br>
+    <label for="product_location">Product Location</label>
+    <br>
+    <input name="product_location" placeholder="Product Location" value="{{ product_location }}"></input>
+    <br>
+    <label for="product_qty">Product Quantity</label>
+    <br>
+    <input name="product_qty" placeholder="Product Quantity" value="{{ product_qty }}"></input>
     <br>
     <button class="my-3" type="submit">Submit</button>
 </form>

@@ -10,8 +10,13 @@
                 <div class="col-auto">
                     <label for="Product Name" class="col-form-label">Product Name</label>
                 </div>
-                <div class="col-auto">
-                    <input type="text" id="product_name" class="form-control bg-input" name="product_name">
+                <div class="dropdown col-auto">
+                    <span class="input-group-addon">Please select</span>
+                    <select name="product_name" class="selectpicker form-control bg-input">
+                        {% for product in products %}
+                        <option value="{{product.product_name}}">{{product.product_name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div>

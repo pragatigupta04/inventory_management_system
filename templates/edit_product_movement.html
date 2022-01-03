@@ -5,11 +5,11 @@
 <form method="post" action="{{ url_for('edit_product_movement')}}" method="post">
     <label for="content">Movement Id</label>
     <br>
-    <input name="movement_id" placeholder="Movement Id" value="{{ movement_id }}"></input>
+    <input name="movement_id" placeholder="Movement Id" value="{{ movement_id }}" readonly=True></input>
     <br>
-    <label for="content">Product Id</label>
+    <label for="content">Product Name</label>
     <br>
-    <input name="product_id" placeholder="Product Id" value="{{ product_id }}"></input>
+    <input name="product_id" placeholder="Product Name" value="{{ product_name }}" readonly=True></input>
     <br>
     <label for="content">From Location</label>
     <br>

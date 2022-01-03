@@ -94,7 +94,16 @@ def add_product_movement():
         return render_template("add_product_movement.html")
     else:
         locations = Location.query.all()
-        return render_template("add_product_movement.html", locations=locations)
+        products = Product.query.all()
+        print(products)
+        prod_loc_dict = {}
+        for product in products:
+            product_name = product.product_name
+            if product_name in prod_loc_dict:
+                prod_loc_dict[product_name].append(product.product_location)
+            else:
+                prod_loc_dict[product_name] =  [product.product_location]
+        return render_template("add_product_movement.html", products=products, locations=locations, prod_loc_dict=prod_loc_dict)
 
 @app.route("/view_products", methods=["GET"])
 def view_products():
@@ -161,22 +170,22 @@ def edit_product_movement():
         if request.method == "GET":
             movementid = request.args.get('movement_id')
             movement = db.session.query(ProductMovement).filter(ProductMovement.movement_id==movementid).first()
-            product_id = movement.product_name
+            product_name = movement.product_name
             from_location = movement.from_location
             to_location = movement.to_location
             product_qty = movement.product_qty
             timestamp = movement.timestamp
-            return render_template('edit_product_movement.html', movement_id=movementid, product_id=product_id, from_location=from_location, to_location=to_location, product_qty=product_qty, timestamp=timestamp)
+            return render_template('edit_product_movement.html', movement_id=movementid, product_name=product_name, from_location=from_location, to_location=to_location, product_qty=product_qty, timestamp=timestamp)
         else:
             movementid = request.form.get('movement_id')
-            product_id = request.form.get('product_id')
+            product_name = request.form.get('product_name')
             from_location = request.form.get('from_location')
             to_location = request.form.get('to_location')
             product_qty = request.form.get('product_qty')
             timestamp = request.form.get('timestamp')
-            print(product_id, from_location)
+            print(product_name, from_location)
             movement = db.session.query(ProductMovement).filter(ProductMovement.movement_id==movementid).first()
-            movement.product_id = product_id
+            movement.product_name = product_name
             movement.from_location = from_location
             movement.to_location = to_location
             movement.product_qty = product_qty
